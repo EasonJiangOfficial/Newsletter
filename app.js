@@ -5,6 +5,9 @@ const app = express();
 const https = require("https");
 require('dotenv').config();
 
+const apiKey = process.env.API_KEY;
+const listIdentifier = process.env.LIST_IDENTIFIER;
+
 // allows the page to display static elements like css and images.
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
@@ -24,7 +27,7 @@ app.post("/",function(req,res){
     
     //creates a variable that is equal to where the information from the form is going to post to the mailchimp server
     
-    const url = "https://us8.api.mailchimp.com/3.0/lists/" + process.env.LIST_IDENTIFIER;
+    const url = "https://us8.api.mailchimp.com/3.0/lists/" + listIdentifier;
 
     // object that will is in a format that mailchimp will accept, defines certain fields that I have collected
     const data = {
@@ -47,7 +50,7 @@ app.post("/",function(req,res){
     //makes a post request to the mailchimp servers and also defines the api key for authentication
     var options = {
         method:"POST",
-        auth:":" + process.env.API_KEY
+        auth:":" + apiKey
     }
 
     //sets a variable to a post request to mailchimp servers, after already sending the data
